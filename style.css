@@ -56,3 +56,10 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 #annualReport.report-style-magazine .report-cover-photo{height:245px;max-height:none;object-fit:cover;border-radius:4px}
 .report-cover-control{margin:8px 0 12px}
 @media print{body #annualReport .report-cover-photo{display:block!important;width:100%!important;max-height:190px!important;object-fit:cover!important;break-inside:avoid}body #annualReport .report-cover-control{display:none!important}}
+
+/* v0.5.2 annual report cover text editor */
+.report-title-controls{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:10px}
+.report-title-controls label{display:flex;flex-direction:column;gap:5px;font-size:12px}
+.report-title-controls input{width:100%;min-width:0}
+.report-title-controls button{justify-self:start}
+@media print{body #annualReport .report-title-controls{display:none!important}}
