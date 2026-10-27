@@ -143,3 +143,8 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 .bulk-song-list label:last-child{border-bottom:0}
 .bulk-song-list input{flex:none;width:18px;height:18px}
 .bulk-song-list small{opacity:.75}
+
+/* v0.7.7 bulk search */
+.bulk-song-row[hidden]{display:none!important}
+#bulkSongSearch{min-width:140px;flex:1}
+#bulkSongReleaseFilter{max-width:100%;flex:1}
