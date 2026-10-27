@@ -83,3 +83,12 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 #annualReport.report-layout-full .report-cover:has(.report-cover-photo) :is(h2,p,.report-cover-kicker){color:#fff!important;text-shadow:0 1px 4px #0008}
 .report-layout-controls{margin:8px 0}
 @media print{body #annualReport .report-layout-controls{display:none!important}body #annualReport.report-layout-none .report-cover-photo{display:none!important}body #annualReport.report-layout-full .report-cover{min-height:240px!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}body #annualReport.report-layout-full .report-cover-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important}body #annualReport.report-layout-full .report-cover:has(.report-cover-photo)::before{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+
+/* v0.5.5 annual report typography */
+#annualReport.report-typography-standard .report-cover h2{font-family:inherit;letter-spacing:normal;font-weight:700;text-transform:none}
+#annualReport.report-typography-editorial .report-cover h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,7vw,48px);font-weight:400;letter-spacing:.055em;line-height:1.32}
+#annualReport.report-typography-editorial .report-cover-subtitle{font-family:Georgia,"Times New Roman",serif;font-style:italic;letter-spacing:.13em}
+#annualReport.report-typography-impact .report-cover h2{font-family:system-ui,-apple-system,sans-serif;font-size:clamp(36px,10vw,64px);font-weight:900;line-height:1.08;letter-spacing:-.045em;overflow-wrap:anywhere}
+#annualReport.report-typography-impact .report-cover-subtitle{font-weight:800;letter-spacing:.3em;text-transform:uppercase}
+.report-typography-controls{margin:8px 0}
+@media print{body #annualReport .report-typography-controls{display:none!important}}
