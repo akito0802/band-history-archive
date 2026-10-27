@@ -120,3 +120,7 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 .import-history-list li:last-child{border-bottom:0}
 .import-history-list li div{margin:4px 0}
 .import-history-list small{opacity:.75}
+
+/* v0.6.4 import history deletion */
+.import-history-delete{display:block;margin-top:9px;font-size:12px}
+#importHistoryClear,.import-history-delete{touch-action:manipulation}
