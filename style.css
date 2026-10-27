@@ -102,3 +102,9 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 #annualReport.report-align-left .report-cover :is(h2,p,.report-cover-kicker){align-self:flex-start}
 .report-align-controls{margin:8px 0}
 @media print{body #annualReport .report-align-controls{display:none!important}}
+
+/* v0.5.7 copy annual cover settings */
+.report-copy-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin:12px 0;padding:12px;border:1px dashed var(--line);border-radius:9px}
+.report-copy-controls label{display:flex;flex-direction:column;gap:6px;flex:1;min-width:180px;font-size:12px}
+.report-copy-controls button{min-height:38px}
+@media print{body #annualReport .report-copy-controls{display:none!important}}
