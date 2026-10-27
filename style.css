@@ -113,3 +113,10 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 .report-reset-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
 .report-reset-controls .note{font-size:11px}
 @media print{body #annualReport .report-reset-controls{display:none!important}}
+
+/* v0.6.3 import history */
+.import-history-list{list-style:none;padding:0;margin:12px 0 0}
+.import-history-list li{padding:11px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.import-history-list li:last-child{border-bottom:0}
+.import-history-list li div{margin:4px 0}
+.import-history-list small{opacity:.75}
