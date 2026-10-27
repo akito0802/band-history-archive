@@ -28,3 +28,17 @@ body.report-print-mode .report-photo{background:#fff;border-color:#ddd}
 body.report-print-mode .report-photo figcaption span{color:#555}
 @media(min-width:700px){.report-photo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media print{body #annualReport .report-photo-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}body #annualReport .report-photo{break-inside:avoid;background:white!important;border:1px solid #ddd!important}body #annualReport .report-photo img{max-height:170px;object-fit:cover}body #annualReport .report-photo figcaption span{color:#555!important}body #annualReport .report-photo-section{break-before:auto}}
+
+/* v0.4.9 annual report themes */
+.report-cover{padding:8px 0 16px;margin-bottom:10px}
+.report-cover-kicker{font-size:10px;letter-spacing:.18em;opacity:.72}
+.report-cover-subtitle{font-size:11px;letter-spacing:.22em;opacity:.7;margin:0}
+#annualReport.report-style-magazine .report-cover{background:linear-gradient(125deg,#26180e,#7b4d26);color:#fff;padding:30px 22px;border-radius:10px;margin-bottom:20px}
+#annualReport.report-style-magazine .report-cover h2{font-size:clamp(26px,7vw,42px);line-height:1.2;margin:16px 0}
+#annualReport.report-style-magazine .report-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#annualReport.report-style-magazine .report-photo:first-child{grid-column:span 2}
+#annualReport.report-style-magazine .report-photo:first-child img{aspect-ratio:16/9}
+#annualReport.report-style-magazine .report-photo{border-radius:3px}
+#annualReport.report-style-magazine .report-photo-section h3{border-bottom:2px solid currentColor;padding-bottom:8px}
+body.report-print-mode #annualReport.report-style-magazine .report-cover{background:#eee;color:#222}
+@media print{body #annualReport.report-style-magazine .report-cover{background:#eee!important;color:#222!important;border:1px solid #bbb;border-radius:0}body #annualReport.report-style-magazine .report-cover *{color:#222!important}body #annualReport.report-style-magazine .report-photo:first-child{grid-column:span 2}body #annualReport.report-style-magazine .report-photo:first-child img{max-height:220px}body #annualReport .report-cover{break-inside:avoid}}
