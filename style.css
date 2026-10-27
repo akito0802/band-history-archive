@@ -73,3 +73,13 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 #annualReport.report-style-magazine .report-cover,#annualReport.report-style-magazine .report-cover h2,#annualReport.report-style-magazine .report-cover p{color:#fff!important}
 .report-color-controls{margin:8px 0}
 @media print{body #annualReport.report-style-magazine .report-cover{print-color-adjust:exact;-webkit-print-color-adjust:exact}body #annualReport .report-color-controls{display:none!important}}
+
+/* v0.5.4 cover photo layouts */
+#annualReport.report-layout-none .report-cover-photo{display:none!important}
+#annualReport.report-layout-wide .report-cover-photo{display:block;width:100%;height:190px;max-height:none;object-fit:cover;border-radius:6px;margin:0 0 15px}
+#annualReport.report-layout-full .report-cover{position:relative;min-height:290px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;isolation:isolate}
+#annualReport.report-layout-full .report-cover-photo{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;margin:0;z-index:-2}
+#annualReport.report-layout-full .report-cover:has(.report-cover-photo)::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.14));z-index:-1}
+#annualReport.report-layout-full .report-cover:has(.report-cover-photo) :is(h2,p,.report-cover-kicker){color:#fff!important;text-shadow:0 1px 4px #0008}
+.report-layout-controls{margin:8px 0}
+@media print{body #annualReport .report-layout-controls{display:none!important}body #annualReport.report-layout-none .report-cover-photo{display:none!important}body #annualReport.report-layout-full .report-cover{min-height:240px!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}body #annualReport.report-layout-full .report-cover-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important}body #annualReport.report-layout-full .report-cover:has(.report-cover-photo)::before{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
