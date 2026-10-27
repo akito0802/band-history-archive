@@ -108,3 +108,8 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 .report-copy-controls label{display:flex;flex-direction:column;gap:6px;flex:1;min-width:180px;font-size:12px}
 .report-copy-controls button{min-height:38px}
 @media print{body #annualReport .report-copy-controls{display:none!important}}
+
+/* v0.5.8 reset annual report cover design */
+.report-reset-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+.report-reset-controls .note{font-size:11px}
+@media print{body #annualReport .report-reset-controls{display:none!important}}
