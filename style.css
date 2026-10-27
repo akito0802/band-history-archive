@@ -124,3 +124,9 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 /* v0.6.4 import history deletion */
 .import-history-delete{display:block;margin-top:9px;font-size:12px}
 #importHistoryClear,.import-history-delete{touch-action:manipulation}
+
+/* v0.6.6 import history filters */
+.import-history-filters{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:12px}
+.import-history-filters input{flex:2;min-width:150px}
+.import-history-filters select{flex:1;min-width:105px}
+.import-history-filters span{font-size:12px;opacity:.75;white-space:nowrap}
