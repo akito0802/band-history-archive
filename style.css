@@ -15,3 +15,16 @@ body #annualReport .toolbar,body #annualReport button{display:none!important}
 body #annualReport h2,body #annualReport h3,body #annualReport strong,body #annualReport p,body #annualReport li{color:#222!important}
 body #annualReport li{break-inside:avoid}
 }
+
+/* v0.4.8 editorial annual report photo archive */
+.report-photo-section{margin:22px 0}
+.report-photo-section h3{letter-spacing:.06em}
+.report-photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.report-photo{margin:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#211b16}
+.report-photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.report-photo figcaption{padding:9px 10px;display:flex;flex-direction:column;gap:3px;font-size:12px;overflow-wrap:anywhere}
+.report-photo figcaption span{font-size:11px;color:var(--muted)}
+body.report-print-mode .report-photo{background:#fff;border-color:#ddd}
+body.report-print-mode .report-photo figcaption span{color:#555}
+@media(min-width:700px){.report-photo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media print{body #annualReport .report-photo-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}body #annualReport .report-photo{break-inside:avoid;background:white!important;border:1px solid #ddd!important}body #annualReport .report-photo img{max-height:170px;object-fit:cover}body #annualReport .report-photo figcaption span{color:#555!important}body #annualReport .report-photo-section{break-before:auto}}
