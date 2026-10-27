@@ -63,3 +63,13 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 .report-title-controls input{width:100%;min-width:0}
 .report-title-controls button{justify-self:start}
 @media print{body #annualReport .report-title-controls{display:none!important}}
+
+/* v0.5.3 annual cover palette */
+#annualReport.report-style-magazine.report-color-brown .report-cover{background:#6b4124!important;background-image:linear-gradient(135deg,#24150f,#85552f)!important}
+#annualReport.report-style-magazine.report-color-navy .report-cover{background:#172c4b!important;background-image:linear-gradient(135deg,#0a1427,#315b86)!important}
+#annualReport.report-style-magazine.report-color-wine .report-cover{background:#652439!important;background-image:linear-gradient(135deg,#2a0d1b,#9a4055)!important}
+#annualReport.report-style-magazine.report-color-forest .report-cover{background:#1d4c3d!important;background-image:linear-gradient(135deg,#0c2924,#477d59)!important}
+#annualReport.report-style-magazine.report-color-black .report-cover{background:#222!important;background-image:linear-gradient(135deg,#080808,#4b4b4b)!important}
+#annualReport.report-style-magazine .report-cover,#annualReport.report-style-magazine .report-cover h2,#annualReport.report-style-magazine .report-cover p{color:#fff!important}
+.report-color-controls{margin:8px 0}
+@media print{body #annualReport.report-style-magazine .report-cover{print-color-adjust:exact;-webkit-print-color-adjust:exact}body #annualReport .report-color-controls{display:none!important}}
