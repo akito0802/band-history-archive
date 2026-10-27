@@ -92,3 +92,13 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 #annualReport.report-typography-impact .report-cover-subtitle{font-weight:800;letter-spacing:.3em;text-transform:uppercase}
 .report-typography-controls{margin:8px 0}
 @media print{body #annualReport .report-typography-controls{display:none!important}}
+
+/* v0.5.6 annual cover title alignment */
+#annualReport.report-align-left .report-cover{text-align:left;align-items:flex-start}
+#annualReport.report-align-center .report-cover{text-align:center;align-items:center}
+#annualReport.report-align-right .report-cover{text-align:right;align-items:flex-end}
+#annualReport.report-align-center .report-cover :is(h2,p,.report-cover-kicker){align-self:center}
+#annualReport.report-align-right .report-cover :is(h2,p,.report-cover-kicker){align-self:flex-end}
+#annualReport.report-align-left .report-cover :is(h2,p,.report-cover-kicker){align-self:flex-start}
+.report-align-controls{margin:8px 0}
+@media print{body #annualReport .report-align-controls{display:none!important}}
