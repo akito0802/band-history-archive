@@ -184,3 +184,7 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
   .bottom{padding-top:6px}
   .bottom button{font-size:19px}
 }
+
+/* v0.41.5 tap-to-open search */
+.search-panel-content[hidden]{display:none!important}
+.search-panel-toggle{margin:10px 0;min-height:40px;width:100%;text-align:left;font-weight:600}
