@@ -15,7 +15,29 @@ function nav(v){document.body.classList.remove('report-print-mode');view=v;editI
 function latestArchiveCalendarDate(){const dates=[];for(const r of records){for(const key of ['date','formed','start','end','birthday']){const v=String(r[key]||'').trim();if(/^\d{4}-\d{2}-\d{2}$/.test(v)&&!Number.isNaN(Date.parse(v+'T00:00:00Z')))dates.push(v)}}return dates.sort().at(-1)||new Date().toLocaleDateString('sv-SE')}
 function unifyDatePickers(){const base=latestArchiveCalendarDate();document.querySelectorAll('input[type="date"]').forEach(input=>{if(input.dataset.calendarUnified)return;input.dataset.calendarUnified='1';input.setAttribute('lang','ja-JP');if(input.value)return;input.addEventListener('pointerdown',()=>{if(!input.value){input.value=base;input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}))}},{once:true})})}
 
-function render(){document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.view===view||(view==='more'&&b.dataset.view==='more')));$('modeButton').textContent=({management:'管理モード',official:'公式サイト',encyclopedia:'百科事典'})[mode]+' ▾';let html='';if(view==='home')html=home();else if(view==='timeline')html=timeline();else if(view==='more')html=more();else if(view==='settings')html=settings();else if(view==='statistics')html=statistics();else if(view==='tourbuilder')html=tourBuilder();else if(view==='touredit')html=tourCommonEditor();else if(view==='touroverview')html=tourOverview();else if(view==='search')html=searchPage();else if(view==='form')html=formPage();else if(view==='detail')html=recordDetail();else if(TYPES[view])html=listPage(view);else html=home();$('app').innerHTML=html;attach();unifyDatePickers()}
+const searchPanelOpen={};
+function setupCollapsibleSearch(){
+  const isTimeline=view==='timeline',isArchive=Boolean(TYPES[view]);
+  if(!isTimeline&&!isArchive)return;
+  const field=document.getElementById(isTimeline?'timelineQuery':'filter');
+  if(!field)return;
+  const toolbar=field.closest('.toolbar');
+  if(!toolbar)return;
+  const panels=[toolbar];
+  if(isArchive){const next=toolbar.nextElementSibling;if(next&&next.classList.contains('toolbar'))panels.push(next)}
+  const key=view;
+  const hasQuery=Boolean(String(field.value||'').trim());
+  const isOpen=searchPanelOpen[key]===undefined?hasQuery:searchPanelOpen[key];
+  const button=document.createElement('button');
+  button.type='button';button.className='secondary search-panel-toggle';
+  button.setAttribute('aria-expanded',String(isOpen));
+  button.textContent=isOpen?'⌕ 検索・絞り込みを閉じる':'⌕ 検索・絞り込み';
+  toolbar.parentNode.insertBefore(button,toolbar);
+  const apply=open=>{searchPanelOpen[key]=open;panels.forEach(p=>{p.hidden=!open;p.classList.toggle('search-panel-content',true)});button.setAttribute('aria-expanded',String(open));button.textContent=open?'⌕ 検索・絞り込みを閉じる':'⌕ 検索・絞り込み'};
+  button.onclick=()=>{const next=!searchPanelOpen[key];apply(next);if(next)field.focus()};
+  apply(isOpen)
+}
+function render(){document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.view===view||(view==='more'&&b.dataset.view==='more')));$('modeButton').textContent=({management:'管理モード',official:'公式サイト',encyclopedia:'百科事典'})[mode]+' ▾';let html='';if(view==='home')html=home();else if(view==='timeline')html=timeline();else if(view==='more')html=more();else if(view==='settings')html=settings();else if(view==='statistics')html=statistics();else if(view==='tourbuilder')html=tourBuilder();else if(view==='touredit')html=tourCommonEditor();else if(view==='touroverview')html=tourOverview();else if(view==='search')html=searchPage();else if(view==='form')html=formPage();else if(view==='detail')html=recordDetail();else if(TYPES[view])html=listPage(view);else html=home();$('app').innerHTML=html;attach();unifyDatePickers();setupCollapsibleSearch()}
 function counts(t){return records.filter(r=>r.type===t).length}
 function linkedSongs(release){const songs=records.filter(r=>r.type==='songs'&&r.releaseId===release.id);const order=Array.isArray(release.trackOrder)?release.trackOrder:[];return songs.sort((a,b)=>{const ai=order.indexOf(a.id),bi=order.indexOf(b.id);return (ai<0?999999:ai)-(bi<0?999999:bi)||a.name.localeCompare(b.name,'ja')})}
 function pastUnreleasedSongs(){const keyOf=n=>String(n||'').trim().normalize('NFKC').toLowerCase();const registered=new Set(records.filter(r=>r.type==='songs').map(r=>keyOf(r.name)));const found=new Map();records.filter(r=>r.type==='shows').forEach(show=>{const lines=String(show.unreleasedSongs||'').split(/\r?\n/);const add=name=>{name=String(name||'').split(/[｜|]/)[0].trim().replace(/\s*\(未\)\s*$/,'');const key=keyOf(name);if(key&&!registered.has(key)&&!found.has(key))found.set(key,name)};lines.forEach(add);(Array.isArray(show.setlistEntries)?show.setlistEntries:[]).forEach(e=>{if(e.kind==='unreleased')add(lines[Number(e.index)]);if(e.kind==='pastUnreleased')add(e.name)});const setlist=String(show.setlist||'').split(/\r?\n/);setlist.forEach(line=>{if(/\(未\)/.test(line))add(line.replace(/^\s*\d+[.．、)）]\s*/,''))})});return [...found.values()].sort((a,b)=>a.localeCompare(b,'ja'))}
