@@ -188,3 +188,6 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 /* v0.41.5 tap-to-open search */
 .search-panel-content[hidden]{display:none!important}
 .search-panel-toggle{margin:10px 0;min-height:40px;width:100%;text-align:left;font-weight:600}
+
+/* v0.41.6 annual report collapsible details */
+.report-details{margin-top:12px}.report-details>summary{cursor:pointer;list-style:none;border:1px solid var(--line);border-radius:9px;padding:12px;color:var(--gold);font-weight:700}.report-details>summary::-webkit-details-marker{display:none}.report-details>summary:before{content:'▸ ';}.report-details[open]>summary:before{content:'▾ '}.report-details-body{padding-top:8px}@media print{#reportDetails:not([open]){display:none!important}}
