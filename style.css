@@ -191,3 +191,6 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 
 /* v0.41.6 annual report collapsible details */
 .report-details{margin-top:12px}.report-details>summary{cursor:pointer;list-style:none;border:1px solid var(--line);border-radius:9px;padding:12px;color:var(--gold);font-weight:700}.report-details>summary::-webkit-details-marker{display:none}.report-details>summary:before{content:'▸ ';}.report-details[open]>summary:before{content:'▾ '}.report-details-body{padding-top:8px}@media print{#reportDetails:not([open]){display:none!important}}
+
+/* v0.41.7 track songwriter credits */
+.song-credits{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
