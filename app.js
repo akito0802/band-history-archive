@@ -206,7 +206,7 @@ function festivalOverview(){
   for(const r of items){const stage=String(r.festivalStage||'ステージ未設定').trim();if(!byStage.has(stage))byStage.set(stage,[]);byStage.get(stage).push(r)}
   const stages=[...byStage.entries()].map(([stage,entries])=>'<section class="item"><h3>'+esc(stage)+'</h3>'+entries.sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))).map(r=>{
    const list=Array.isArray(r.setlistEntries)?r.setlistEntries.filter(e=>e&&e.kind!=='mc'&&e.kind!=='encore'):null;
-   const songNames=list?list.map(e=>setlistEntryName(r,e)):String(r.setlist||'').split(/\\r?\\n/).map(x=>x.trim()).filter(x=>x&&!setlistMarker(x));
+   const songNames=list?list.map(e=>setlistEntryName(r,e)):String(r.setlist||'').split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!setlistMarker(x));
    return '<div class="item"><strong>'+esc(r.festivalArtist||'出演アーティスト未設定')+'</strong><p class="note">'+esc(r.date||'日付未設定')+' ／ '+esc(r.venue||'会場未設定')+' ／ '+songNames.length+'曲</p>'+(songNames.length?'<details><summary>セットリストを見る</summary><ol>'+songNames.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ol></details>':'<p class="note">セットリスト未登録</p>')+'<button type="button" class="secondary" data-detail="'+esc(r.id)+'">公演詳細を見る</button></div>';
   }).join('')+'</section>').join('');
   return '<details class="section card"><summary><strong>'+esc(key)+'</strong> <span class="pill">'+items.length+'出演</span></summary>'+stages+'</details>';
