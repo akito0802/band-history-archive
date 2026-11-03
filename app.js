@@ -48,8 +48,36 @@ function songMvMarks(song){const raw=String(song.mvUrl||'').trim();const url=/^h
 function songTieupMarks(song){const n=records.filter(t=>t.type==="tieups"&&t.songId===song.id).length;return n?'<span class="pill">🎬 タイアップ'+(n>1?' '+n+'件':'')+'</span>':''}
 function songCreditsSmall(song){const credits=[['作詞',song.writer],['作曲',song.composer]].filter(([,v])=>String(v||'').trim());return credits.length?'<small class="song-credits">'+credits.map(([label,value])=>esc(label)+'：'+esc(value)).join(' ／ ')+'</small>':''}
 function trackEditor(release){const linked=linkedSongs(release),available=records.filter(r=>r.type==='songs'&&r.releaseId!==release.id);return '<section class="section card"><h2>収録曲・曲順管理</h2><p class="note">登録済みの楽曲を選択して追加できます。上下ボタンで曲順を変更し、「曲順を保存」を押してください。</p><div id="trackRows">'+(linked.length?linked.map((song,i)=>'<div class="item" data-track-id="'+esc(song.id)+'"><div><span class="pill">#'+(i+1)+'</span> <strong>'+esc(song.name)+'</strong>'+songCreditsSmall(song)+songTieupMarks(song)+songMvMarks(song)+'</div><div class="toolbar"><button type="button" class="outline" data-move="-1" data-track="'+esc(song.id)+'">↑</button><button type="button" class="outline" data-move="1" data-track="'+esc(song.id)+'">↓</button><button type="button" class="outline danger" data-unlink="'+esc(song.id)+'">外す</button></div></div>').join(''):'<p class="muted">まだ収録曲はありません。</p>')+'</div><div class="field"><label>登録済み楽曲から追加</label><select id="addTrack"><option value="">楽曲を選択</option>'+available.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('')+'</select></div><div class="toolbar"><button type="button" class="secondary" id="addTrackButton">＋ 追加</button><button type="button" class="primary" id="saveTrackOrder">曲順を保存</button></div><p class="note">※作品から外した楽曲は削除されません。楽曲自体はアーカイブに残ります。</p></section>'}
-function showArrangementForSong(show,name,entry){const lines=String(show?.liveArrangements||'').split(/\r?\n/);const parse=x=>String(x||'').split(/[｜|]/).map(y=>y.trim());if(entry?.kind==='arrangement'){const selected=parse(lines[Number(entry.index)]);if(selected[0])return selected}const normalize=x=>String(x||'').normalize('NFKC').trim().replace(/^\d+[.．、)）]\s*/,'').replace(/\s*\(未\)\s*$/,'').replace(/\s+/g,' ').toLowerCase();const target=normalize(name);return lines.map(parse).find(a=>a[0]&&(normalize(a[0])===target||normalize(a[1])===target))||null}
-function showSetlistTrackHtml(show,name,entry){const parts=String(name||'').split(/[｜|]/).map(x=>x.trim());const match=showArrangementForSong(show,entry?.kind==='arrangement'?parts[0]:name,entry);const arrangement=entry?.kind==='arrangement'||Boolean(match);const display=arrangement?(match?.[1]||parts[1]||parts[0]):name;const original=match?.[0]||parts[0];return '<strong>'+esc(display)+(entry?.kind==='unreleased'||entry?.kind==='pastUnreleased'?' (未)':'')+'</strong>'+(arrangement?'<small class="setlist-arrangement">ライブ限定アレンジ'+(original&&original!==display?' ／ 原曲：'+esc(original):'')+'</small>':'')}
+function showArrangementForSong(show,name,entry){
+ const lines=String(show?.liveArrangements||'').split(/\r?\n/);
+ const normalize=x=>String(x||'').normalize('NFKC').trim().replace(/^\d+[.．、)）]\s*/,'').replace(/\s*\(未\)\s*$/,'').replace(/\s+/g,' ').toLowerCase();
+ const parse=line=>{
+  const raw=String(line||'').trim();
+  const separated=raw.split(/[｜|]/).map(x=>x.trim());
+  if(separated.length>1)return separated;
+  const spaced=raw.split(/[　\t]| {2,}/).map(x=>x.trim()).filter(Boolean);
+  if(spaced.length>1)return [spaced[0],spaced.slice(1).join(' ')];
+  const songs=records.filter(r=>r.type==='songs').map(r=>r.name).filter(Boolean).sort((a,b)=>b.length-a.length);
+  const song=songs.find(n=>normalize(raw).startsWith(normalize(n)+' '));
+  if(song)return [song,raw.slice(song.length).trim()];
+  return [raw,''];
+ };
+ if(entry?.kind==='arrangement'){
+  const selected=parse(lines[Number(entry.index)]);
+  if(selected[0])return selected;
+ }
+ const target=normalize(name);
+ return lines.map(parse).find(a=>a[0]&&(normalize(a[0])===target||normalize(a[1])===target))||null;
+}
+function showSetlistTrackHtml(show,name,entry){
+ const parts=String(name||'').split(/[｜|]/).map(x=>x.trim());
+ const match=showArrangementForSong(show,entry?.kind==='arrangement'?parts[0]:name,entry);
+ const arrangement=entry?.kind==='arrangement'||Boolean(match&&match[1]);
+ const original=match?.[0]||parts[0];
+ const variant=match?.[1]||parts[1]||'';
+ const display=arrangement?(variant&&variant.includes(original)?variant:original+(variant?' — '+variant:'')):name;
+ return '<strong>'+esc(display)+(entry?.kind==='unreleased'||entry?.kind==='pastUnreleased'?' (未)':'')+'</strong>'+(arrangement?'<small class="setlist-arrangement">ライブ限定アレンジ ／ 原曲：'+esc(original)+'</small>':'');
+}
 function details(r){let blocks=[];if(r.type==='releases'){const songs=linkedSongs(r);blocks.push('<section class="section card"><h2>収録曲 <span class="pill">'+songs.length+'曲</span></h2><p class="note">登録された曲順で表示しています。曲順の変更は下の「収録曲・曲順管理」から行えます。</p>'+(songs.length?'<ol style="list-style:none;padding:0;margin:0;display:grid;gap:8px">'+songs.map((x,i)=>'<li class="item" style="display:flex;align-items:center;gap:12px;justify-content:space-between"><span class="pill" style="min-width:36px;text-align:center;flex:none">'+String(i+1).padStart(2,'0')+'</span><div style="flex:1;min-width:0"><strong style="display:block;overflow-wrap:anywhere">'+esc(x.name)+'</strong>'+songCreditsSmall(x)+songTieupMarks(x)+songMvMarks(x)+(x.duration?'<small class="muted">演奏時間 '+esc(x.duration)+'</small>':'')+'</div><button type="button" class="outline" data-edit="'+esc(x.id)+'" aria-label="'+esc(x.name)+'を編集">編集</button></li>').join('')+'</ol>':'<p class="muted">収録曲はまだありません。楽曲を登録・編集して、この作品を「収録作品」に指定してください。</p>')+'</section>')}
 if(r.type==='songs'&&r.releaseId){const release=records.find(x=>x.id===r.releaseId&&x.type==='releases');if(release)blocks.push('<p class="pill">収録作品：'+esc(release.name)+'</p>')}
 if(r.type==='shows'&&(Array.isArray(r.setlistEntries)||Array.isArray(r.setlistSongIds))){const entries=Array.isArray(r.setlistEntries)?r.setlistEntries:r.setlistSongIds.map(id=>({kind:'song',id}));if(entries.length){let songNo=0,mcNo=0;const rows=entries.map(e=>{if(e.kind==='encore')return '<div class="setlist-encore">ENCORE</div>';if(e.kind==='mc'){mcNo++;return '<div class="setlist-row setlist-mc"><span class="pill">MC'+mcNo+'</span><span class="setlist-track">MC</span></div>'}songNo++;const raw=String(setlistEntryName(r,e)||'');return '<div class="setlist-row"><span class="pill">'+String(songNo).padStart(2,'0')+'</span><span class="setlist-track"><strong>'+esc(name)+(e.kind==='unreleased'||e.kind==='pastUnreleased'?' (未)':'')+'</strong>'+note+'</span></div>'});blocks.push('<section class="section"><h2>セットリスト（'+songNo+'曲・MC '+mcNo+'回）</h2>'+rows.join('')+'</section>')}}
