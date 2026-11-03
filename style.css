@@ -194,3 +194,6 @@ body.report-print-mode #annualReport.report-style-magazine .report-cover{backgro
 
 /* v0.41.7 track songwriter credits */
 .song-credits{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+
+/* v0.41.8 show setlist readability */
+.setlist-row{display:flex;align-items:flex-start;justify-content:flex-start;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);min-height:46px}.setlist-row .pill{flex:none;min-width:38px;text-align:center}.setlist-track{flex:1;min-width:0;text-align:left;overflow-wrap:anywhere;line-height:1.45}.setlist-track strong{font-size:15px;font-weight:650}.setlist-arrangement{display:block;font-size:11px;color:var(--gold);margin-top:3px}.setlist-mc .setlist-track{font-size:13px;color:var(--muted)}.setlist-encore{text-align:center;font-size:12px;letter-spacing:.2em;color:var(--gold);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;margin:12px 0}.top{background:#17130f!important;isolation:isolate}.top .brand{min-width:0}.top .brand strong{white-space:nowrap}@media(max-width:600px){.top{gap:8px}.top #modeButton{font-size:12px;padding:8px;flex:none;max-width:145px}.brand small{letter-spacing:1px;font-size:7px}.brand strong{font-size:14px}.setlist-row{gap:10px;padding:9px 2px}}
